@@ -48,3 +48,22 @@ KNN_NEIGHBOURS = (20, 50, 100, 200)   # neighbours kept per item (tuned on valid
 KNN_SHRINK = (0.0, 20.0)              # similarity shrinkage: dot / (norm_i * norm_j + shrink)
 KNN_HISTORY_HALF_LIVES = (None, 14, 28, 90)  # recency weighting of a user's own purchases
 N_CANDIDATES = 50                     # candidates generated before product de-duplication
+
+# ---- Week 4: latent factors, content, repurchase and hybrid fusion --------------------
+SVD_FACTORS = (32, 64, 128)           # latent dimensions tried (nested: one SVD per setting below)
+SVD_ITEM_DAMPING = (0.0, 0.5)         # columns scaled by count ** -damping (reduces popularity bias)
+SVD_HISTORY_HALF_LIVES = (None, 28)   # recency weighting of the matrix that is factorised
+CONTENT_NEIGHBOURS = (20, 50)         # content-similar items kept per item
+CONTENT_CATEGORICAL_WEIGHTS = (0.5, 1.0, 2.0)  # weight of categorical attributes vs text in item features
+REPURCHASE_HALF_LIVES = (7, 28, 90)   # recency decay when ranking a user's own past items
+RRF_C = 20                            # reciprocal-rank-fusion constant: contribution = 1 / (c + rank)
+FUSION_GRID = {                       # component weights searched on validation
+    "popularity": (0.0, 1.0, 2.0),
+    "item_knn": (0.0, 1.0, 2.0),
+    "svd": (0.0, 1.0, 2.0),
+    "content": (0.0, 0.5, 1.0),
+    "repurchase": (0.0, 1.0, 2.0, 4.0),
+}
+OUTFIT_GAMMAS = (0.0, 0.1, 0.2, 0.4)  # strength of the product-type affinity re-rank (0 = off)
+OUTFIT_MIN_SUPPORT = 30               # baskets needed before a product-type pair gets a lift value
+BOOTSTRAP_SAMPLES = 2000

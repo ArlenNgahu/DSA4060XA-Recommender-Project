@@ -357,6 +357,7 @@ class Experiment:
     item_user_share: np.ndarray           # share of training users who bought each item
     product_of_item: np.ndarray           # product_code per item column (colour variants share one)
     category_of_item: np.ndarray          # integer code of product_type_name per item column
+    category_names: np.ndarray            # product_type_name for each category code
     item_names: np.ndarray                # prod_name per item column
 
 
@@ -365,6 +366,7 @@ def build_experiment(prepared: PrepResult, articles: pd.DataFrame) -> Experiment
     split = time_split(prepared.cleaned, pd.Timestamp(meta["val_start"]), pd.Timestamp(meta["test_start"]))
     users, items = make_index(prepared.cleaned)
     by_id = articles.set_index("article_id").loc[items]
+    category_codes, category_names = pd.factorize(by_id["product_type_name"])
     train = build_interaction_matrix(split.train, users, items, "binary")
     return Experiment(
         cleaned=prepared.cleaned, split=split, users=users, items=items, train_matrix=train,
@@ -372,7 +374,7 @@ def build_experiment(prepared: PrepResult, articles: pd.DataFrame) -> Experiment
         test_matrix=build_interaction_matrix(split.test, users, items, "binary"),
         item_user_share=train.getnnz(axis=0) / train.shape[0],
         product_of_item=by_id["product_code"].to_numpy(),
-        category_of_item=pd.factorize(by_id["product_type_name"])[0],
+        category_of_item=category_codes, category_names=np.asarray(category_names),
         item_names=by_id["prod_name"].to_numpy(),
     )
 

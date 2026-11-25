@@ -72,3 +72,13 @@ def evaluate_topk(recs: np.ndarray, truth: sparse.csr_matrix, user_positions: np
         out["Category diversity"] = category_diversity(recs, category_of_item)
     out["users evaluated"] = len(user_positions)
     return pd.Series(out)
+
+
+def paired_bootstrap(a: np.ndarray, b: np.ndarray, n_boot: int = 2000, seed: int = 42) -> dict:
+    """Mean difference a - b of per-user scores with a bootstrap 95% interval over users."""
+    diff = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
+    rng = np.random.default_rng(seed)
+    means = np.array([diff[rng.integers(0, len(diff), len(diff))].mean() for _ in range(n_boot)])
+    low, high = np.percentile(means, [2.5, 97.5])
+    return {"mean_difference": float(diff.mean()), "ci_low": float(low), "ci_high": float(high),
+            "significant": bool(low > 0 or high < 0)}

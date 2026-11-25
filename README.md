@@ -5,7 +5,7 @@ Project option 18: **Fashion Outfit Recommender** (item-level, outfit-aware hybr
 - [x] Week 1: problem definition, dataset audit (`notebooks/01_data_understanding.ipynb`)
 - [x] Week 2: cleaning, sparsity, popularity baseline (`notebooks/02_eda_and_baseline.ipynb`)
 - [x] Week 3: personalized model, item-based collaborative filtering (`notebooks/03_personalized_model.ipynb`)
-- [ ] Week 4: advanced model and evaluation
+- [x] Week 4: advanced model, hybrid and final evaluation (`notebooks/04_advanced_model_and_evaluation.ipynb`)
 - [ ] Week 5: prototype, responsible recommendation, report
 
 ## Dataset
@@ -47,13 +47,26 @@ Run `03_personalized_model.ipynb` after notebook 02. It tunes item-item cosine c
 (shrinkage, neighbours, recency weighting) on validation only, compares it with the popularity baselines,
 shows example users with "because you bought X" explanations, and breaks results down by user activity.
 
+## Week 4 workflow
+Run `04_advanced_model_and_evaluation.ipynb` after notebook 03. It first measures what customers buy next
+(repeats, colour variants, new products), tunes five components on validation (popularity, item-item CF,
+latent factors, content similarity, repurchase), fuses them with tuned weights and an optional outfit-affinity
+re-rank, then refits on training plus validation and evaluates once on the test block. Two tracks are
+reported: all purchases, and discovery of items never bought before. It also covers a bootstrap comparison,
+a cold-item slice and example recommendations with reasons, and saves `docs/model_comparison_test.csv`,
+`docs/final_model_settings.json` and `data/cleaned/final_hybrid.pkl` for the Week 5 prototype.
+
+The notebook numbering differs slightly from the brief's suggested layout: notebooks 04 (advanced model and
+evaluation) here cover the brief's 05 and 06.
+
 ## Structure
 ```
 data/raw, data/cleaned   inputs and prepared data
 notebooks/               one notebook per pipeline stage
 src/                     config.py, data_audit.py (Week 1), prepare.py (leakage-safe filtering, split,
-                         matrices, popularity baseline), recommender.py (item-item CF), evaluation.py
-                         (ranking and beyond-accuracy metrics)
+                         matrices, popularity baseline), recommender.py (item-item CF), latent.py (PureSVD),
+                         hybrid.py (content features, repurchase, outfit affinity, rank fusion),
+                         evaluation.py (ranking and beyond-accuracy metrics, bootstrap)
 docs/                    problem statement and modelling plan
 images/                  figures used in the report
 ```

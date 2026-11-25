@@ -1,0 +1,46 @@
+{
+  "params": {
+    "pop_half_life": 3.0,
+    "knn_k": 50,
+    "knn_shrink": 20.0,
+    "knn_history_half_life": 28.0,
+    "svd_factors": 32,
+    "svd_damping": 0.0,
+    "svd_history_half_life": 28.0,
+    "content_k": 20,
+    "repurchase_half_life": 7.0,
+    "n_candidates": 100,
+    "rrf_c": 20
+  },
+  "weights_all_purchases": {
+    "popularity": 1.0,
+    "item_knn": 0.0,
+    "svd": 1.0,
+    "content": 1.0,
+    "repurchase": 2.0
+  },
+  "weights_discovery": {
+    "popularity": 2.0,
+    "item_knn": 1.0,
+    "svd": 1.0,
+    "content": 1.0
+  },
+  "outfit_gamma_all_purchases": 0.1,
+  "outfit_gamma_discovery": 0.1,
+  "content_categorical_weight": 0.5,
+  "top_k": 10,
+  "prepared_meta": {
+    "spec": {
+      "window_days": 365,
+      "min_user_interactions": 5,
+      "min_item_interactions": 20,
+      "sample_users": 50000,
+      "seed": 42,
+      "val_days": 14,
+      "test_days": 14
+    },
+    "last_day": "2020-09-22",
+    "val_start": "2020-08-26",
+    "test_start": "2020-09-09"
+  }
+}
