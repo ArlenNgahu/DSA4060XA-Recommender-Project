@@ -1,0 +1,10 @@
+# Large raw data is never committed; see README for download steps
+data/raw/*
+!data/raw/.gitkeep
+data/cleaned/*.parquet
+data/cleaned/*.csv
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.DS_Store
+data/cleaned/*.pkl

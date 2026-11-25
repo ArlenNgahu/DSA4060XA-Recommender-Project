@@ -1,0 +1,62 @@
+{
+  "full_file": {
+    "interactions (rows)": 31788324,
+    "users": 1362281,
+    "items": 104547,
+    "date_min": "2018-09-20 00:00:00",
+    "date_max": "2020-09-22 00:00:00",
+    "days with sales": 734,
+    "exact duplicate rows": 2974905,
+    "file sorted by date (duplicate count exact)": true,
+    "mean price (scaled units)": 0.027829273773185833
+  },
+  "full_file_requirements": [
+    {
+      "measure": "interactions",
+      "observed": 31788324,
+      "brief minimum": 10000,
+      "meets minimum": true
+    },
+    {
+      "measure": "users",
+      "observed": 1362281,
+      "brief minimum": 500,
+      "meets minimum": true
+    },
+    {
+      "measure": "items",
+      "observed": 104547,
+      "brief minimum": 500,
+      "meets minimum": true
+    }
+  ],
+  "referential_integrity": {
+    "customer ids duplicated in customers.csv": 0,
+    "article ids duplicated in articles.csv": 0,
+    "transaction customers missing from customers.csv": 0,
+    "transaction articles missing from articles.csv": 0,
+    "customers with no transactions": 9699,
+    "articles with no transactions": 995
+  },
+  "gini_items": 0.7585822040155649,
+  "gini_users": 0.6455815850631408,
+  "item_concentration": {
+    "top 1%": 0.18615149386296678,
+    "top 5%": 0.44044712769380356,
+    "top 10%": 0.607487170446608,
+    "top 20%": 0.7910427740701271
+  },
+  "working_set": {
+    "interactions (rows)": 31788324,
+    "users": 1362281,
+    "items": 104547,
+    "unique user-item pairs": 27306439,
+    "repeat purchases (rows - unique pairs)": 4481885,
+    "sparsity (share of empty matrix cells)": 0.9998082714475391,
+    "date_min": "2018-09-20 00:00:00",
+    "date_max": "2020-09-22 00:00:00"
+  },
+  "basket_share_2plus_items": 0.7040759879293128,
+  "basket_share_2plus_groups": 0.4525681707376033,
+  "image_coverage": null
+}

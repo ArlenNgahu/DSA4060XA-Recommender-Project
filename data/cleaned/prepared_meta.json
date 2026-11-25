@@ -1,0 +1,14 @@
+{
+  "spec": {
+    "window_days": 365,
+    "min_user_interactions": 5,
+    "min_item_interactions": 20,
+    "sample_users": 50000,
+    "seed": 42,
+    "val_days": 14,
+    "test_days": 14
+  },
+  "last_day": "2020-09-22",
+  "val_start": "2020-08-26",
+  "test_start": "2020-09-09"
+}
