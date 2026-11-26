@@ -6,7 +6,8 @@ Project option 18: **Fashion Outfit Recommender** (item-level, outfit-aware hybr
 - [x] Week 2: cleaning, sparsity, popularity baseline (`notebooks/02_eda_and_baseline.ipynb`)
 - [x] Week 3: personalized model, item-based collaborative filtering (`notebooks/03_personalized_model.ipynb`)
 - [x] Week 4: advanced model, hybrid and final evaluation (`notebooks/04_advanced_model_and_evaluation.ipynb`)
-- [ ] Week 5: prototype, responsible recommendation, report
+- [x] Week 5: outfit completion, responsible recommendation (`notebooks/05_outfit_and_responsible_recommendation.ipynb`), prototype (`app/app.py`)
+- [ ] Final report and presentation (see `docs/report_outline.md` and `docs/presentation_outline.md`)
 
 ## Dataset
 H&M Personalized Fashion Recommendations (Kaggle competition data).
@@ -59,16 +60,26 @@ a cold-item slice and example recommendations with reasons, and saves `docs/mode
 The notebook numbering differs slightly from the brief's suggested layout: notebooks 04 (advanced model and
 evaluation) here cover the brief's 05 and 06.
 
+## Week 5 workflow
+1. Re-run `04_advanced_model_and_evaluation.ipynb` (it saves `data/cleaned/final_hybrid.pkl` and the settings).
+2. Run `05_outfit_and_responsible_recommendation.ipynb` (outfit completion, collapse of colour variants,
+   popularity bias, fairness by age group, filter bubbles, cold start; saves `data/cleaned/outfit_model.pkl`
+   and `docs/responsible_and_outfit_metrics.csv`).
+3. Start the prototype from the project root: `streamlit run app/app.py`.
+4. Write the report and presentation using `docs/report_outline.md` and `docs/presentation_outline.md`.
+
 ## Structure
 ```
 data/raw, data/cleaned   inputs and prepared data
 notebooks/               one notebook per pipeline stage
 src/                     config.py, data_audit.py (Week 1), prepare.py (leakage-safe filtering, split,
                          matrices, popularity baseline), recommender.py (item-item CF), latent.py (PureSVD),
-                         hybrid.py (content features, repurchase, outfit affinity, rank fusion),
+                         hybrid.py (content features, repurchase, outfit affinity, rank fusion), outfit.py (complete the look),
+                         serving.py (shelves with reasons for the app),
                          evaluation.py (ranking and beyond-accuracy metrics, bootstrap)
 docs/                    problem statement and modelling plan
 images/                  figures used in the report
+app/                     Streamlit prototype (app.py)
 ```
 
 ## Acknowledgements

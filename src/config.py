@@ -45,25 +45,31 @@ LIFT_MIN_SUPPORT = 2_000     # minimum co-occurring baskets for a pair to be rep
 
 # ---- Week 3: item-based collaborative filtering --------------------------------------
 KNN_NEIGHBOURS = (20, 50, 100, 200)   # neighbours kept per item (tuned on validation)
-KNN_SHRINK = (0.0, 20.0)              # similarity shrinkage: dot / (norm_i * norm_j + shrink)
+KNN_SHRINK = (0.0, 20.0, 50.0, 100.0) # similarity shrinkage: dot / (norm_i * norm_j + shrink)
 KNN_HISTORY_HALF_LIVES = (None, 14, 28, 90)  # recency weighting of a user's own purchases
 N_CANDIDATES = 50                     # candidates generated before product de-duplication
 
 # ---- Week 4: latent factors, content, repurchase and hybrid fusion --------------------
-SVD_FACTORS = (32, 64, 128)           # latent dimensions tried (nested: one SVD per setting below)
-SVD_ITEM_DAMPING = (0.0, 0.5)         # columns scaled by count ** -damping (reduces popularity bias)
+SVD_FACTORS = (8, 16, 32, 64, 128)    # latent dimensions tried (nested: one SVD per setting below)
+SVD_ITEM_DAMPING = (-0.25, 0.0, 0.25, 0.5)  # columns scaled by count ** -damping (negative = favour popular items)
 SVD_HISTORY_HALF_LIVES = (None, 28)   # recency weighting of the matrix that is factorised
-CONTENT_NEIGHBOURS = (20, 50)         # content-similar items kept per item
-CONTENT_CATEGORICAL_WEIGHTS = (0.5, 1.0, 2.0)  # weight of categorical attributes vs text in item features
-REPURCHASE_HALF_LIVES = (7, 28, 90)   # recency decay when ranking a user's own past items
+CONTENT_NEIGHBOURS = (10, 20, 50)     # content-similar items kept per item
+CONTENT_CATEGORICAL_WEIGHTS = (0.1, 0.25, 0.5, 1.0, 2.0)  # weight of categorical attributes vs text in item features
+REPURCHASE_HALF_LIVES = (1, 3, 7, 28, 90)  # recency decay when ranking a user's own past items
 RRF_C = 20                            # reciprocal-rank-fusion constant: contribution = 1 / (c + rank)
 FUSION_GRID = {                       # component weights searched on validation
-    "popularity": (0.0, 1.0, 2.0),
+    "popularity": (0.0, 1.0, 2.0, 4.0),
     "item_knn": (0.0, 1.0, 2.0),
-    "svd": (0.0, 1.0, 2.0),
-    "content": (0.0, 0.5, 1.0),
-    "repurchase": (0.0, 1.0, 2.0, 4.0),
+    "svd": (0.0, 1.0, 2.0, 4.0),
+    "content": (0.0, 0.5, 1.0, 2.0),
+    "repurchase": (0.0, 1.0, 2.0, 4.0, 8.0),
 }
-OUTFIT_GAMMAS = (0.0, 0.1, 0.2, 0.4)  # strength of the product-type affinity re-rank (0 = off)
+OUTFIT_GAMMAS = (0.0, 0.05, 0.1, 0.2, 0.4)  # strength of the product-type affinity re-rank (0 = off)
 OUTFIT_MIN_SUPPORT = 30               # baskets needed before a product-type pair gets a lift value
 BOOTSTRAP_SAMPLES = 2000
+
+# ---- Week 5: outfit completion ("complete the look") ------------------------------------
+OUTFIT_BASKET_SIZES = (2, 8)          # same-day baskets used to learn which items go together
+OUTFIT_SHRINK = (0.0, 5.0, 20.0)      # shrinkage for the basket co-purchase similarity
+OUTFIT_NEIGHBOURS = 200               # neighbours stored per item before filtering to other product types
+OUTFIT_EVAL_PAIRS = 20_000            # (basket, anchor item) pairs sampled for evaluation
